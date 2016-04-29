@@ -34,5 +34,10 @@ namespace ComputerMonitorClient
         {
             return JsonConvert.DeserializeObject<List<Device>>(Downloader(String.Format("devicelist.php?token={0}", token)));
         }
+
+        public static Status AddDevice(string token, string name)
+        {
+            return JsonConvert.DeserializeObject<Status>(Downloader(String.Format("deviceadd.php?token={0}&name={1}", token, name)));
+        }
     }
 }

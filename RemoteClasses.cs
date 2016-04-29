@@ -16,7 +16,7 @@ namespace ComputerMonitorClient.RemoteClasses
 
     public class Device
     {
-        public string id { get; set; }
+        public int id { get; set; }
         public string name { get; set; }
     }
     public class Usage

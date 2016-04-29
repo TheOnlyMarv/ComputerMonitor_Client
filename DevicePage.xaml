@@ -13,7 +13,8 @@
         <ComboBox x:Name="comboDevice" VerticalAlignment="Top" VerticalContentAlignment="Center" FontFamily="Consolas" Margin="124,0,0,0"/>
         <Label x:Name="label_Copy" Content="Create new Device:" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Consolas" Margin="0,29,0,0"/>
         <TextBox x:Name="textDevice" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Margin="124,25,0,0" FontFamily="Consolas" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnOk" Content="Ok" HorizontalAlignment="Right" Margin="0,53,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Right" Margin="0,53,101,0" VerticalAlignment="Top" Width="75" Click="btnCreate_Click"/>
+        <Button x:Name="btnUse" Content="Use" HorizontalAlignment="Right" Margin="0,53,0,0" VerticalAlignment="Top" Width="75" Click="btnUse_Click"/>
 
     </Grid>
 </Page>

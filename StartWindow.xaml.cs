@@ -23,8 +23,26 @@ namespace ComputerMonitorClient
         {
             InitializeComponent();
 
-            LoginPage loginPage = new LoginPage();
-            mainFrame.Navigate(loginPage);
+#if DEBUG
+            LoginPage debugLoginPage = new LoginPage();
+            mainFrame.Navigate(debugLoginPage);
+#endif
+
+            if (String.IsNullOrEmpty(Properties.Settings.Default["token"].ToString()))
+            {
+                LoginPage loginPage = new LoginPage();
+                mainFrame.Navigate(loginPage);
+            }
+            else if (Int32.Parse(Properties.Settings.Default["deviceId"].ToString()) < 0)
+            {
+                DevicePage devicePage = new DevicePage();
+                mainFrame.Navigate(devicePage);
+            }
+            else
+            {
+                this.Close();
+            }
+
         }
     }
 }

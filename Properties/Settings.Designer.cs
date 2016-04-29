@@ -34,5 +34,17 @@ namespace ComputerMonitorClient.Properties {
                 this["token"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int deviceId {
+            get {
+                return ((int)(this["deviceId"]));
+            }
+            set {
+                this["deviceId"] = value;
+            }
+        }
     }
 }
