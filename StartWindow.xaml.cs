@@ -9,7 +9,9 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ComputerMonitorClient
@@ -19,6 +21,7 @@ namespace ComputerMonitorClient
     /// </summary>
     public partial class StartWindow : Window
     {
+
         public StartWindow()
         {
             InitializeComponent();
@@ -26,7 +29,7 @@ namespace ComputerMonitorClient
 #if DEBUG
             LoginPage debugLoginPage = new LoginPage();
             mainFrame.Navigate(debugLoginPage);
-#endif
+#else
 
             if (String.IsNullOrEmpty(Properties.Settings.Default["token"].ToString()))
             {
@@ -43,6 +46,7 @@ namespace ComputerMonitorClient
                 this.Close();
             }
 
+#endif
         }
     }
 }
