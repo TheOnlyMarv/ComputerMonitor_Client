@@ -10,20 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Runtime.Serialization.Json;
 
 namespace ComputerMonitorClient
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaktionslogik für StartWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class StartWindow : Window
     {
-        public LoginWindow()
+        public StartWindow()
         {
             InitializeComponent();
+
+            LoginPage loginPage = new LoginPage();
+            mainFrame.Navigate(loginPage);
         }
     }
 }

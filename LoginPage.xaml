@@ -1,0 +1,19 @@
+﻿<Page x:Class="ComputerMonitorClient.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ComputerMonitorClient"
+      mc:Ignorable="d" d:DesignWidth="300"
+      Title="LoginPage" Height="132.237">
+
+    <Grid VerticalAlignment="Center">
+        <Label x:Name="label" Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Consolas" Margin="0,4,0,0"/>
+        <Label x:Name="label_Copy" Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,31,0,0" FontFamily="Consolas"/>
+        <TextBox x:Name="textUsername" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Margin="70,0,0,0" FontFamily="Consolas" Text="test" VerticalContentAlignment="Center"/>
+        <PasswordBox x:Name="boxPassword" VerticalAlignment="Top" Margin="70,29,0,0" FontFamily="Consolas" Password="test" VerticalContentAlignment="Center"/>
+        <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,52,10,0" FontFamily="Consolas" Click="btnLogin_Click"/>
+        <Button x:Name="btnRegister" Content="Register" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="70,52,0,0" FontFamily="Consolas" Click="btnRegister_Click"/>
+
+    </Grid>
+</Page>

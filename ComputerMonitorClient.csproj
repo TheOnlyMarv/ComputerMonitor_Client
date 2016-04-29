@@ -64,19 +64,32 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Client.cs" />
+    <Compile Include="DevicePage.xaml.cs">
+      <DependentUpon>DevicePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RemoteClasses.cs" />
-    <Page Include="LoginWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Compile Include="StartWindow.xaml.cs">
+      <DependentUpon>StartWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="DevicePage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="StartWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\ExpressionDark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
