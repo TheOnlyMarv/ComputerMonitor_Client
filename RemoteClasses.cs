@@ -18,6 +18,7 @@ namespace ComputerMonitorClient.RemoteClasses
     {
         public int id { get; set; }
         public string name { get; set; }
+        public DateTime? last_used { get; set; }
     }
     public class Usage
     {
