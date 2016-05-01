@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -17,7 +18,8 @@ namespace ComputerMonitorClient
 
         private static string Downloader(string extendetUrl)
         {
-            return webClient.DownloadString(baseUrl + extendetUrl);
+            string result = webClient.DownloadString(baseUrl + extendetUrl);
+            return result;
         }
 
         public static Status Login(string username, string password)
@@ -38,6 +40,12 @@ namespace ComputerMonitorClient
         public static Status AddDevice(string token, string name)
         {
             return JsonConvert.DeserializeObject<Status>(Downloader(String.Format("deviceadd.php?token={0}&name={1}", token, name)));
+        }
+
+        public static Status AddUsage(string token, int deviceId, double download, double upload, DateTime date)
+        {
+            return JsonConvert.DeserializeObject<Status>(Downloader(String.Format("usagedataadd.php?token={0}&deviceid={1}&download={2}&upload={3}&date={4}",
+                token, deviceId, download, upload, date.ToString("yyyy-MM-dd")).Replace(",", ".")));
         }
     }
 }

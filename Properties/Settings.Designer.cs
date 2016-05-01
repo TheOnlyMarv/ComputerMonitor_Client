@@ -70,5 +70,87 @@ namespace ComputerMonitorClient.Properties {
                 this["adapter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double newupload {
+            get {
+                return ((double)(this["newupload"]));
+            }
+            set {
+                this["newupload"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double newdownload {
+            get {
+                return ((double)(this["newdownload"]));
+            }
+            set {
+                this["newdownload"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double oldupload {
+            get {
+                return ((double)(this["oldupload"]));
+            }
+            set {
+                this["oldupload"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double olddownload {
+            get {
+                return ((double)(this["olddownload"]));
+            }
+            set {
+                this["olddownload"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime olddate {
+            get {
+                return ((global::System.DateTime)(this["olddate"]));
+            }
+            set {
+                this["olddate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool oldsynchronized {
+            get {
+                return ((bool)(this["oldsynchronized"]));
+            }
+            set {
+                this["oldsynchronized"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime newdate {
+            get {
+                return ((global::System.DateTime)(this["newdate"]));
+            }
+            set {
+                this["newdate"] = value;
+            }
+        }
     }
 }

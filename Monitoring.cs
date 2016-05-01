@@ -13,13 +13,19 @@ namespace ComputerMonitorClient
         private IEnumerable<ModelHolder> modelHolders;
         private Echevil.NetworkAdapter networkAdapter;
         private Echevil.NetworkMonitor networkMonitor;
+        private Synchronizer synchronizer;
         private BackgroundWorker backgroudWorker;
 
-        public Monitoring(IEnumerable<ModelHolder> modelHolders)
+        public Monitoring(IEnumerable<ModelHolder> modelHolders) 
         {
             this.modelHolders = modelHolders;
             this.networkMonitor = new Echevil.NetworkMonitor();
             this.backgroudWorker = new BackgroundWorker();
+            this.synchronizer = new Synchronizer();
+
+            var todayData = synchronizer.TodayData();
+            this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.First(x => x.Key == "download").Value;
+            this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.First(x => x.Key == "upload").Value;
         }
 
         public void StartMonitoring()
@@ -72,6 +78,13 @@ namespace ComputerMonitorClient
                         default:
                             break;
                     }
+                }
+                if (DateTime.Today.Second % 5 == 0)
+                {
+                    synchronizer.SaveTodayDate(modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value, modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value);
+                    var todayData = synchronizer.TodayData();
+                    this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.First(x => x.Key == "download").Value;
+                    this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.First(x => x.Key == "upload").Value;
                 }
                 backgroudWorker.ReportProgress(0);
             }

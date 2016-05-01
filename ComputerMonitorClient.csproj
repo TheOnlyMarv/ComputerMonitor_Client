@@ -102,6 +102,7 @@
     <Compile Include="StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Synchronizer.cs" />
     <Compile Include="Unit.cs" />
     <Page Include="DevicePage.xaml">
       <SubType>Designer</SubType>
