@@ -93,6 +93,7 @@
     <Compile Include="MeasuringPage.xaml.cs">
       <DependentUpon>MeasuringPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring.cs" />
     <Compile Include="OptionsPage.xaml.cs">
       <DependentUpon>OptionsPage.xaml</DependentUpon>
     </Compile>

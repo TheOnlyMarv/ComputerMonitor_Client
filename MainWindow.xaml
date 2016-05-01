@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComputerMonitorClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="330" Width="300" WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize">
+        Title="Computer Monitor" Height="330" Width="300" WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize">
     <Grid Background="#FF2D2D30">
         <Frame x:Name="mainFrame" Content="" Margin="10" NavigationUIVisibility="Hidden"/>
 

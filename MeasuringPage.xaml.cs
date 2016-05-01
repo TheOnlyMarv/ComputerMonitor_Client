@@ -22,10 +22,27 @@ namespace ComputerMonitorClient
     {
 
         private IMainSwitch context;
+        private Monitoring monitoring;
 
         public MeasuringPage()
         {
             InitializeComponent();
+            StartMonitoring();
+        }
+
+        private void StartMonitoring()
+        {
+            ModelHolder[] modelholder = 
+                {
+                    new ModelHolder(labelCurrentDownload, ModelUiTyp.CurrentDownload),
+                    new ModelHolder(labelCurrentUpload, ModelUiTyp.CurrentUpload),
+                    new ModelHolder(labelTodayDownload, ModelUiTyp.TodayDownload),
+                    new ModelHolder(labelTodayUpload, ModelUiTyp.TodayUpload),
+                    new ModelHolder(labelTotalDownload, ModelUiTyp.TotalDownload),
+                    new ModelHolder(labelTotalUpload, ModelUiTyp.TotalUpload)
+                };
+            monitoring = new Monitoring(modelholder);
+            monitoring.StartMonitoring();
         }
 
         public MeasuringPage(IMainSwitch context) : this()
