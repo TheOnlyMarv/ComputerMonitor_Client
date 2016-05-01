@@ -1,0 +1,39 @@
+﻿<Page x:Class="ComputerMonitorClient.MeasuringPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ComputerMonitorClient"
+      mc:Ignorable="d" d:DesignWidth="300"
+      Title="MeasuringPage" >
+
+    <Grid VerticalAlignment="Center" >
+        <GroupBox x:Name="groupCurrent" Header="Current" VerticalAlignment="Top" Height="79" FontFamily="Consolas">
+            <Grid VerticalAlignment="Center">
+                <Label x:Name="labelDescCurrentDownload" Content="Download:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelDescCurrentUpload" Content="Upload:" HorizontalAlignment="Left" Margin="23,19,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelCurrentDownload" Content="0.00 KB/s" HorizontalAlignment="Left" Margin="82,0,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelCurrentUpload" Content="0.00 KB/s" HorizontalAlignment="Left" Margin="82,19,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="groupToday" Header="Today" VerticalAlignment="Top" Height="79" Margin="0,84,0,0" FontFamily="Consolas">
+            <Grid VerticalAlignment="Center">
+                <Label x:Name="labelDescTodayDownload" Content="Download:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelDescTodayUpload" Content="Upload:" HorizontalAlignment="Left" Margin="23,19,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelTodayDownload" Content="0.00 KB" HorizontalAlignment="Left" Margin="82,0,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelTodayUpload" Content="0.00 KB" HorizontalAlignment="Left" Margin="82,19,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="groupTotal" Header="Total" VerticalAlignment="Top" Height="79" Margin="0,168,0,0" FontFamily="Consolas">
+            <Grid VerticalAlignment="Center">
+                <Label x:Name="labelDescTotalDownload" Content="Download:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelDescTotalUpload" Content="Upload:" HorizontalAlignment="Left" Margin="23,19,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelTotalDownload" Content="0.00 KB" HorizontalAlignment="Left" Margin="82,0,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="labelTotalUpload" Content="0.00 KB" HorizontalAlignment="Left" Margin="82,19,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btnOptions" Content="Options" HorizontalAlignment="Left" Margin="0,252,0,0" VerticalAlignment="Top" Width="75" Click="btnOptions_Click"/>
+        <Button x:Name="btnExit" Content="Exit" Margin="0,252,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="btnExit_Click"/>
+
+    </Grid>
+</Page>

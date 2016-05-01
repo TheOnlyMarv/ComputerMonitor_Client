@@ -19,11 +19,19 @@ namespace ComputerMonitorClient
     /// <summary>
     /// Interaktionslogik für DevicePage.xaml
     /// </summary>
-    public partial class DevicePage : Page
+    public partial class DevicePage : Page, IStartSwitch
     {
+
+        private IStartSwitch context;
+
         public DevicePage()
         {
             InitializeComponent();
+        }
+
+        public DevicePage(IStartSwitch context) : this()
+        {
+            this.context = context;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -63,13 +71,18 @@ namespace ComputerMonitorClient
             {
                 Properties.Settings.Default["deviceId"] = (comboDevice.SelectedItem as Device).id;
                 Properties.Settings.Default.Save();
-
+                this.SwitchToMainWindow();
             }
             else
             {
                 MessageBox.Show("No Device selected!","Warning",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
 
+        }
+
+        public void SwitchToMainWindow()
+        {
+            context.SwitchToMainWindow();
         }
     }
 }

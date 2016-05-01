@@ -19,34 +19,46 @@ namespace ComputerMonitorClient
     /// <summary>
     /// Interaktionslogik für StartWindow.xaml
     /// </summary>
-    public partial class StartWindow : Window
+    public partial class StartWindow : Window, IStartSwitch
     {
 
         public StartWindow()
         {
             InitializeComponent();
 
-#if DEBUG
-            LoginPage debugLoginPage = new LoginPage();
-            mainFrame.Navigate(debugLoginPage);
-#else
+//#if DEBUG
+//            MainWindow mainWindow = new MainWindow();
+//            mainWindow.Show();
+//            this.Close();
+//            //LoginPage debugLoginPage = new LoginPage();
+//            //mainFrame.Navigate(debugLoginPage);
+//#else
 
             if (String.IsNullOrEmpty(Properties.Settings.Default["token"].ToString()))
             {
-                LoginPage loginPage = new LoginPage();
+                LoginPage loginPage = new LoginPage(this);
                 mainFrame.Navigate(loginPage);
             }
             else if (Int32.Parse(Properties.Settings.Default["deviceId"].ToString()) < 0)
             {
-                DevicePage devicePage = new DevicePage();
+                DevicePage devicePage = new DevicePage(this);
                 mainFrame.Navigate(devicePage);
             }
             else
             {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
                 this.Close();
             }
 
-#endif
+//#endif
+        }
+
+        public void SwitchToMainWindow()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
     }
 }

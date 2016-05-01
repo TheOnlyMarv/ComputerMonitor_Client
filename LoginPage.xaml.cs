@@ -19,11 +19,18 @@ namespace ComputerMonitorClient
     /// <summary>
     /// Interaktionslogik für LoginPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class LoginPage : Page, IStartSwitch
     {
+        private IStartSwitch context;
+
         public LoginPage()
         {
             InitializeComponent();
+        }
+
+        public LoginPage(IStartSwitch context) : this()
+        {
+            this.context = context;
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -34,7 +41,7 @@ namespace ComputerMonitorClient
                 Properties.Settings.Default["token"] = status.token;
                 Properties.Settings.Default.Save();
 
-                DevicePage devicePage = new DevicePage();
+                DevicePage devicePage = new DevicePage(this.context);
                 this.NavigationService.Navigate(devicePage);
             }
             else
@@ -43,7 +50,6 @@ namespace ComputerMonitorClient
             }
         }
             
-
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             Status status = Client.Register(textUsername.Text, boxPassword.Password);
@@ -55,6 +61,11 @@ namespace ComputerMonitorClient
             {
                 MessageBox.Show(status.message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        public void SwitchToMainWindow()
+        {
+            context.SwitchToMainWindow();
         }
     }
 }

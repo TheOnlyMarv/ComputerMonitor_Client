@@ -46,5 +46,29 @@ namespace ComputerMonitorClient.Properties {
                 this["deviceId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte unit {
+            get {
+                return ((byte)(this["unit"]));
+            }
+            set {
+                this["unit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string adapter {
+            get {
+                return ((string)(this["adapter"]));
+            }
+            set {
+                this["adapter"] = value;
+            }
+        }
     }
 }
