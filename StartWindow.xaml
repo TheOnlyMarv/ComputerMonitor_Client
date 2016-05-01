@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComputerMonitorClient"
         mc:Ignorable="d"
-        Title="Computer Monitor - Login" Height="183.553" Width="411.842">
+        Title="Computer Monitor - Login" Height="183.553" Width="411.842" Icon="Resources/cm_1.ico">
     <Grid Background="#FF2D2D30">
         <Image x:Name="ImageLogo" Margin="10,10,0,0" Stretch="Fill" Source="Resources/logo.png" HorizontalAlignment="Left" Width="128" Height="128" VerticalAlignment="Top"/>
         <Frame x:Name="mainFrame" Content="" Height="128" VerticalAlignment="Top" Margin="143,10,10,0" NavigationUIVisibility="Hidden"/>

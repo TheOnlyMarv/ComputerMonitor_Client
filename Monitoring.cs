@@ -51,6 +51,9 @@ namespace ComputerMonitorClient
 
         private void MonitoringInBackgroud(object sender, DoWorkEventArgs e)
         {
+            var totalData = synchronizer.LoadTotalData();
+            this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalDownload).Value = totalData.First(x => x.Key == "download").Value;
+            this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalUpload).Value = totalData.First(x => x.Key == "upload").Value;
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);

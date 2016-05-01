@@ -77,6 +77,27 @@ namespace ComputerMonitorClient
             StartSynchronizing();
         }
 
+        public IDictionary<String, Double> LoadTotalData()
+        {
+            string token = Properties.Settings.Default["token"].ToString();
+            int deviceId = (int)Properties.Settings.Default["deviceId"];
+
+            double download = newDownload;
+            double upload = newUpload;
+
+            List<Usage> usageList = Client.LoadUsage(token, deviceId);
+            if (usageList != null)
+            {
+                download += usageList.Sum(x=>x.download);
+                upload += usageList.Sum(x => x.upload);
+            }
+
+            IDictionary<String, Double> result = new Dictionary<String, Double>();
+            result.Add(new KeyValuePair<String, Double>("download", download));
+            result.Add(new KeyValuePair<String, Double>("upload", upload));
+            return result;
+        }
+
         private void LoadFromSettings()
         {
             this.newDownload = (double)Properties.Settings.Default["newdownload"];

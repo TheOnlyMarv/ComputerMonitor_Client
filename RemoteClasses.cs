@@ -22,8 +22,8 @@ namespace ComputerMonitorClient.RemoteClasses
     }
     public class Usage
     {
-        public string upload { get; set; }
-        public string download { get; set; }
+        public double upload { get; set; }
+        public double download { get; set; }
         public string date { get; set; }
     }
 }
