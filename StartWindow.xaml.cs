@@ -47,7 +47,7 @@ namespace ComputerMonitorClient
 
         public StartWindow(bool hasToken) : this()
         {
-            if (hasToken)
+            if (!hasToken)
             {
                 LoginPage loginPage = new LoginPage(this);
                 mainFrame.Navigate(loginPage);
