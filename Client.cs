@@ -47,7 +47,8 @@ namespace ComputerMonitorClient
             return JsonConvert.DeserializeObject<Status>(Downloader(String.Format("usagedataadd.php?token={0}&deviceid={1}&download={2}&upload={3}&date={4}",
                 token, deviceId, download, upload, date.ToString("yyyy-MM-dd")).Replace(",", ".")));
         }
-                public static List<Usage> LoadUsage(string token, int deviceId)
+        
+        public static List<Usage> LoadUsage(string token, int deviceId)
         {
             return JsonConvert.DeserializeObject<List<Usage>>(Downloader(String.Format("usagedatalist.php?token={0}&deviceid={1}", token, deviceId)));
         }

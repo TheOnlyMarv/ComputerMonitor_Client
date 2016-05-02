@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,6 +33,7 @@ namespace ComputerMonitorClient
 
             comboUnit.ItemsSource = Enum.GetValues(typeof(Unit)).Cast<Unit>();
             comboNetworkAdapter.ItemsSource = adapters;
+            checkStartup.IsChecked = IsOnStartUp();
         }
 
         public OptionsPage(IMainSwitch context) : this()
@@ -49,8 +51,11 @@ namespace ComputerMonitorClient
             Properties.Settings.Default["unit"] = (byte)(Unit)comboUnit.SelectedItem;
             Properties.Settings.Default["adapter"] = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
             Properties.Settings.Default.Save();
+            StartUp((bool)checkStartup.IsChecked);
+
             this.SwitchToMeasuringPage();
         }
+
 
         private void comboNetworkAdapter_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -60,7 +65,48 @@ namespace ComputerMonitorClient
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            SettingsReset();
             this.SwitchToMeasuringPage();
+        }
+
+        private void SettingsReset()
+        {
+            checkStartup.IsChecked = IsOnStartUp();
+            string adapter = Properties.Settings.Default["adapter"].ToString();
+            comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default["unit"].ToString());
+        }
+
+        private void StartUp(bool addOnStartup)
+        {
+            try
+            {
+                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                Assembly curAssembly = Assembly.GetExecutingAssembly();
+                if (addOnStartup)
+                {
+                    key.SetValue(curAssembly.GetName().Name, curAssembly.Location);
+                }
+                else
+                {
+                    key.DeleteValue(curAssembly.GetName().Name);
+                }
+            }
+            catch { }
+        }
+
+        private bool IsOnStartUp()
+        {
+            try
+            {
+                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                Assembly curAssembly = Assembly.GetExecutingAssembly();
+                return key.GetValue(curAssembly.GetName().Name) != null; 
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void CloseApplication()
