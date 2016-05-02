@@ -85,7 +85,7 @@ namespace ComputerMonitorClient
                 Assembly curAssembly = Assembly.GetExecutingAssembly();
                 if (addOnStartup)
                 {
-                    key.SetValue(curAssembly.GetName().Name, curAssembly.Location);
+                    key.SetValue(curAssembly.GetName().Name, curAssembly.Location + " start");
                 }
                 else
                 {

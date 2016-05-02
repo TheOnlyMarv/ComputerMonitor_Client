@@ -16,7 +16,7 @@ namespace ComputerMonitorClient
         private Synchronizer synchronizer;
         private BackgroundWorker backgroudWorker;
 
-        public Monitoring(IEnumerable<ModelHolder> modelHolders) 
+        public Monitoring(IEnumerable<ModelHolder> modelHolders)
         {
             this.modelHolders = modelHolders;
             this.networkMonitor = new Echevil.NetworkMonitor();
@@ -51,9 +51,23 @@ namespace ComputerMonitorClient
 
         private void MonitoringInBackgroud(object sender, DoWorkEventArgs e)
         {
-            var totalData = synchronizer.LoadTotalData();
-            this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalDownload).Value = totalData.First(x => x.Key == "download").Value;
-            this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalUpload).Value = totalData.First(x => x.Key == "upload").Value;
+            bool connectionProblem = true;
+
+            while (connectionProblem)
+            {
+                try
+                {
+                    var totalData = synchronizer.LoadTotalData();
+                    this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalDownload).Value = totalData.First(x => x.Key == "download").Value;
+                    this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalUpload).Value = totalData.First(x => x.Key == "upload").Value;
+                    connectionProblem = false;
+                }
+                catch (System.Net.WebException)
+                {
+                    System.Threading.Thread.Sleep(3000);
+                }
+            }
+
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);

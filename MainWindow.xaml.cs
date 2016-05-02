@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace ComputerMonitorClient
 {
@@ -21,10 +22,13 @@ namespace ComputerMonitorClient
     {
         private OptionsPage optionsPage;
         private MeasuringPage measuringPage;
+        private bool statedMinimized = false;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            trayIcon.TrayMouseDoubleClick += TrayIcon_TrayMouseDoubleClick;
 
             if (String.IsNullOrEmpty(Properties.Settings.Default["adapter"].ToString()))
             {
@@ -34,6 +38,22 @@ namespace ComputerMonitorClient
             {
                 this.SwitchToMeasuringPage();
             }
+        }
+
+        public MainWindow(bool isMinimized) : this()
+        {
+            if (isMinimized)
+            {
+                this.WindowState = WindowState.Minimized;
+                this.statedMinimized = isMinimized;
+            }
+        }
+
+        private void TrayIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Normal;
+            this.ShowInTaskbar = true;
+            this.Activate();
         }
 
         public void CloseApplication()
@@ -57,6 +77,22 @@ namespace ComputerMonitorClient
                 measuringPage = new MeasuringPage(this);
             }
             mainFrame.Navigate(measuringPage);
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                this.ShowInTaskbar = false;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (statedMinimized)
+            {
+                this.ShowInTaskbar = false;
+            }
         }
     }
 }
