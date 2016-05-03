@@ -25,24 +25,6 @@ namespace ComputerMonitorClient
         private StartWindow()
         {
             InitializeComponent();
-
-
-            //if (String.IsNullOrEmpty(Properties.Settings.Default["token"].ToString()))
-            //{
-            //    LoginPage loginPage = new LoginPage(this);
-            //    mainFrame.Navigate(loginPage);
-            //}
-            //else if (Int32.Parse(Properties.Settings.Default["deviceId"].ToString()) < 0)
-            //{
-            //    DevicePage devicePage = new DevicePage(this);
-            //    mainFrame.Navigate(devicePage);
-            //}
-            //else
-            //{
-            //    MainWindow mainWindow = new MainWindow();
-            //    mainWindow.Show();
-            //    this.Close();
-            //}
         }
 
         public StartWindow(bool hasToken) : this()
