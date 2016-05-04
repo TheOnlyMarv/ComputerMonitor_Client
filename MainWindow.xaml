@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ComputerMonitorClient"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d"
-        Title="Computer Monitor" Height="330" Width="300" WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize" Icon="Resources/cm_1.ico" StateChanged="Window_StateChanged" Loaded="Window_Loaded">
+        Title="Computer Monitor" Height="489.212" Width="300" WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize" Icon="Resources/cm_1.ico" StateChanged="Window_StateChanged" Loaded="Window_Loaded">
     <Grid Background="#FF2D2D30">
         <Frame x:Name="mainFrame" Content="" Margin="10" NavigationUIVisibility="Hidden"/>
         <tb:TaskbarIcon x:Name="trayIcon" IconSource="Resources/cm_1.ico" ToolTipText="Open Computer Monitor" />

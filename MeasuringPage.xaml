@@ -4,10 +4,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ComputerMonitorClient"
+      xmlns:lvc="clr-namespace:LiveCharts;assembly=LiveCharts"
       mc:Ignorable="d" d:DesignWidth="300"
       Title="MeasuringPage" >
 
-    <Grid VerticalAlignment="Center" >
+    <Grid VerticalAlignment="Center">
         <GroupBox x:Name="groupCurrent" Header="Current" VerticalAlignment="Top" Height="79" FontFamily="Consolas">
             <Grid VerticalAlignment="Center">
                 <Label x:Name="labelDescCurrentDownload" Content="Download:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
@@ -32,8 +33,20 @@
                 <Label x:Name="labelTotalUpload" Content="0.00 KB" HorizontalAlignment="Left" Margin="82,19,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <Button x:Name="btnOptions" Content="Options" HorizontalAlignment="Left" Margin="0,252,0,0" VerticalAlignment="Top" Width="75" Click="btnOptions_Click" FontFamily="Consolas"/>
-        <Button x:Name="btnExit" Content="Exit" Margin="0,252,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="btnExit_Click" FontFamily="Consolas"/>
+        <GroupBox x:Name="groupUsage" Header="Usage" VerticalAlignment="Top" Height="151" Margin="0,252,0,0" FontFamily="Consolas">
+            <Grid>
+                <lvc:LineChart Series="{Binding Series}" Background="#FF2D2D30" LineSmoothness="0.5" >
+                    <lvc:LineChart.AxisX>
+                        <lvc:Axis LabelFormatter="{Binding XFormatter}" Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
+                    </lvc:LineChart.AxisX>
+                    <lvc:LineChart.AxisY>
+                        <lvc:Axis LabelFormatter="{Binding YFormatter}"/>
+                    </lvc:LineChart.AxisY>
+                </lvc:LineChart>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btnOptions" Content="Options" HorizontalAlignment="Left" Margin="0,408,0,0" VerticalAlignment="Top" Width="75" Click="btnOptions_Click" FontFamily="Consolas"/>
+        <Button x:Name="btnExit" Content="Exit" Margin="0,408,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="btnExit_Click" FontFamily="Consolas"/>
 
     </Grid>
 </Page>

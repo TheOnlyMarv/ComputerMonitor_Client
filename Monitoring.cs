@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using LiveCharts;
 
 namespace ComputerMonitorClient
 {
@@ -15,6 +16,7 @@ namespace ComputerMonitorClient
         private Echevil.NetworkMonitor networkMonitor;
         private Synchronizer synchronizer;
         private BackgroundWorker backgroudWorker;
+        private SeriesCollection series;
 
         public Monitoring(IEnumerable<ModelHolder> modelHolders)
         {
@@ -26,6 +28,11 @@ namespace ComputerMonitorClient
             var todayData = synchronizer.TodayData();
             this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.First(x => x.Key == "download").Value;
             this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.First(x => x.Key == "upload").Value;
+        }
+
+        public Monitoring(IEnumerable<ModelHolder> modelHolders, SeriesCollection series) : this(modelHolders)
+        {
+            this.series = series;
         }
 
         public void StartMonitoring()
@@ -115,6 +122,30 @@ namespace ComputerMonitorClient
                 if (model.Typ == ModelUiTyp.CurrentDownload || model.Typ == ModelUiTyp.CurrentUpload)
                 {
                     model.Label.Content = string.Format("{0} KB/s", model.Value.ToString("n"));
+                    if (model.Typ == ModelUiTyp.CurrentDownload)
+                    {
+                        if (series[0].Values.Count > 30)
+                        {
+                            series[0].Values.RemoveAt(0);
+                        }
+                        series[0].Values.Add(new UsageViewModel
+                        {
+                            Usage = model.Value,
+                            Time = DateTime.Now
+                        });
+                    }
+                    else
+                    {
+                        if (series[1].Values.Count > 30)
+                        {
+                            series[1].Values.RemoveAt(0);
+                        }
+                        series[1].Values.Add(new UsageViewModel
+                        {
+                            Usage = model.Value,
+                            Time = DateTime.Now
+                        });
+                    }
                 }
                 else
                 {

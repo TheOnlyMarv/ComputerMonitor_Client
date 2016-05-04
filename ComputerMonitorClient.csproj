@@ -58,6 +58,10 @@
       <Private>True</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.6.7.0, Culture=neutral, PublicKeyToken=d1901e6ed2eb0532, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.6.7.0\lib\net452\LiveCharts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NetworkMonitor">
       <HintPath>E:\CloudSync\Other\Visual Basic Projekte\ComputerMonitor\ComputerMonitor\NetworkMonitor.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -115,6 +119,7 @@
     </Compile>
     <Compile Include="Synchronizer.cs" />
     <Compile Include="Unit.cs" />
+    <Compile Include="UsageViewModel.cs" />
     <Page Include="DevicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

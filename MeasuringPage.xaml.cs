@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiveCharts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,15 +25,42 @@ namespace ComputerMonitorClient
         private IMainSwitch context;
         private Monitoring monitoring;
 
+        public SeriesCollection Series { get; set; }
+        public Func<double, string> YFormatter { get; set; }
+        public Func<double, string> XFormatter { get; set; }
+
         public MeasuringPage()
         {
             InitializeComponent();
+            InitializeChart();
             StartMonitoring();
+        }
+
+        private void InitializeChart()
+        {
+            var config = new SeriesConfiguration<UsageViewModel>();
+            config.Y(x => x.Usage);
+            config.X(x => x.Time.ToOADate());
+            Series = new SeriesCollection(config)
+            {
+                new LineSeries {
+                    Values =new ChartValues<UsageViewModel>(),
+                    PointRadius = 0,
+                },
+                new LineSeries
+                {
+                    Values =new ChartValues<UsageViewModel>(),
+                    PointRadius = 0,
+                }
+            };
+            DataContext = this;
+            YFormatter = val => "";
+            XFormatter = val => "";
         }
 
         private void StartMonitoring()
         {
-            ModelHolder[] modelholder = 
+            ModelHolder[] modelholder =
                 {
                     new ModelHolder(labelCurrentDownload, ModelUiTyp.CurrentDownload),
                     new ModelHolder(labelCurrentUpload, ModelUiTyp.CurrentUpload),
@@ -41,7 +69,7 @@ namespace ComputerMonitorClient
                     new ModelHolder(labelTotalDownload, ModelUiTyp.TotalDownload),
                     new ModelHolder(labelTotalUpload, ModelUiTyp.TotalUpload)
                 };
-            monitoring = new Monitoring(modelholder);
+            monitoring = new Monitoring(modelholder, Series);
             monitoring.StartMonitoring();
         }
 
