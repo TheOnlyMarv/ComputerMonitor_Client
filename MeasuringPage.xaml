@@ -35,7 +35,7 @@
         </GroupBox>
         <GroupBox x:Name="groupUsage" Header="Usage" VerticalAlignment="Top" Height="151" Margin="0,252,0,0" FontFamily="Consolas">
             <Grid>
-                <lvc:LineChart Series="{Binding Series}" Background="#FF2D2D30" LineSmoothness="0.5" >
+                <lvc:LineChart Series="{Binding Series}" Background="#FF2D2D30" Hoverable="False" >
                     <lvc:LineChart.AxisX>
                         <lvc:Axis LabelFormatter="{Binding XFormatter}" Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
                     </lvc:LineChart.AxisX>

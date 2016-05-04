@@ -69,7 +69,7 @@ namespace ComputerMonitorClient
                     this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalUpload).Value = totalData.First(x => x.Key == "upload").Value;
                     connectionProblem = false;
                 }
-                catch (System.Net.WebException)
+                catch (Exception)
                 {
                     System.Threading.Thread.Sleep(3000);
                 }
