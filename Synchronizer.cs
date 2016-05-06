@@ -36,12 +36,9 @@ namespace ComputerMonitorClient
             StartSynchronizing();
         }
 
-        public IDictionary<String, Double> TodayData()
+        public SynchronizerData TodayData()
         {
-            IDictionary<String, Double> result = new Dictionary<String, Double>();
-            result.Add(new KeyValuePair<String, Double>("download", newData.Download));
-            result.Add(new KeyValuePair<String, Double>("upload", newData.Upload));
-            return result;
+            return newData.CopyWithoutSynch();
         }
 
         public void SaveTodayDate(double download, double upload)
@@ -63,7 +60,7 @@ namespace ComputerMonitorClient
             StartSynchronizing();
         }
 
-        public IDictionary<String, Double> LoadTotalData()
+        public SynchronizerData LoadTotalData()
         {
             string token = Properties.Settings.Default["token"].ToString();
             int deviceId = (int)Properties.Settings.Default["deviceId"];
@@ -78,10 +75,7 @@ namespace ComputerMonitorClient
                 upload += usageList.Sum(x => x.upload);
             }
 
-            IDictionary<String, Double> result = new Dictionary<String, Double>();
-            result.Add(new KeyValuePair<String, Double>("download", download));
-            result.Add(new KeyValuePair<String, Double>("upload", upload));
-            return result;
+            return new SynchronizerData() { Download = download, Upload = upload };
         }
 
         private void LoadFromSettings()

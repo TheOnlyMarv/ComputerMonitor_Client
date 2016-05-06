@@ -26,8 +26,8 @@ namespace ComputerMonitorClient
             this.synchronizer = new Synchronizer();
 
             var todayData = synchronizer.TodayData();
-            this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.First(x => x.Key == "download").Value;
-            this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.First(x => x.Key == "upload").Value;
+            this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.Download;
+            this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.Upload;
         }
 
         public Monitoring(IEnumerable<ModelHolder> modelHolders, SeriesCollection series) : this(modelHolders)
@@ -64,8 +64,8 @@ namespace ComputerMonitorClient
                 try
                 {
                     var totalData = synchronizer.LoadTotalData();
-                    modelHolders.First(x => x.Typ == ModelUiTyp.TotalDownload).Value = totalData.First(x => x.Key == "download").Value;
-                    modelHolders.First(x => x.Typ == ModelUiTyp.TotalUpload).Value = totalData.First(x => x.Key == "upload").Value;
+                    modelHolders.First(x => x.Typ == ModelUiTyp.TotalDownload).Value = totalData.Download;
+                    modelHolders.First(x => x.Typ == ModelUiTyp.TotalUpload).Value = totalData.Upload;
                     connectionProblem = false;
                 }
                 catch (Exception)
@@ -106,8 +106,8 @@ namespace ComputerMonitorClient
                 {
                     synchronizer.SaveTodayDate(modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value, modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value);
                     var todayData = synchronizer.TodayData();
-                    modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.First(x => x.Key == "download").Value;
-                    modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.First(x => x.Key == "upload").Value;
+                    modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.Download;
+                    modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.Upload;
                 }
                 backgroudWorker.ReportProgress(0);
             }
