@@ -38,7 +38,7 @@ namespace ComputerMonitorClient
             Status status = Client.Login(textUsername.Text, boxPassword.Password);
             if (status.status)
             {
-                Properties.Settings.Default["token"] = status.token;
+                Properties.Settings.Default[Utilities.TOKEN] = status.token;
                 Properties.Settings.Default.Save();
 
                 DevicePage devicePage = new DevicePage(this.context);

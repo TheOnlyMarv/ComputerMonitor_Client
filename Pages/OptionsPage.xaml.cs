@@ -43,13 +43,13 @@ namespace ComputerMonitorClient
 
         private void comboUnit_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default["unit"].ToString());
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[Utilities.UNIT].ToString());
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default["unit"] = (byte)(Unit)comboUnit.SelectedItem;
-            Properties.Settings.Default["adapter"] = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
+            Properties.Settings.Default[Utilities.UNIT] = (byte)(Unit)comboUnit.SelectedItem;
+            Properties.Settings.Default[Utilities.ADAPTER] = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
             Properties.Settings.Default.Save();
             StartUp((bool)checkStartup.IsChecked);
 
@@ -59,7 +59,7 @@ namespace ComputerMonitorClient
 
         private void comboNetworkAdapter_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            string adapter = Properties.Settings.Default["adapter"].ToString();
+            string adapter = Properties.Settings.Default[Utilities.ADAPTER].ToString();
             comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
         }
 
@@ -72,9 +72,9 @@ namespace ComputerMonitorClient
         private void SettingsReset()
         {
             checkStartup.IsChecked = IsOnStartUp();
-            string adapter = Properties.Settings.Default["adapter"].ToString();
+            string adapter = Properties.Settings.Default[Utilities.ADAPTER].ToString();
             comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
-            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default["unit"].ToString());
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[Utilities.UNIT].ToString());
         }
 
         private void StartUp(bool addOnStartup)

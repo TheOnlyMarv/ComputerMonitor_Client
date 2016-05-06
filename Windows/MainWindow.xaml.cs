@@ -30,7 +30,7 @@ namespace ComputerMonitorClient
 
             trayIcon.TrayMouseDoubleClick += TrayIcon_TrayMouseDoubleClick;
 
-            if (String.IsNullOrEmpty(Properties.Settings.Default["adapter"].ToString()))
+            if (String.IsNullOrEmpty(Properties.Settings.Default[Utilities.ADAPTER].ToString()))
             {
                 this.SwitchToOptionPage();
             }
