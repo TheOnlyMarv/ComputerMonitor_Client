@@ -59,14 +59,13 @@ namespace ComputerMonitorClient
         private void MonitoringInBackgroud(object sender, DoWorkEventArgs e)
         {
             bool connectionProblem = true;
-
             while (connectionProblem)
             {
                 try
                 {
                     var totalData = synchronizer.LoadTotalData();
-                    this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalDownload).Value = totalData.First(x => x.Key == "download").Value;
-                    this.modelHolders.First(x => x.Typ == ModelUiTyp.TotalUpload).Value = totalData.First(x => x.Key == "upload").Value;
+                    modelHolders.First(x => x.Typ == ModelUiTyp.TotalDownload).Value = totalData.First(x => x.Key == "download").Value;
+                    modelHolders.First(x => x.Typ == ModelUiTyp.TotalUpload).Value = totalData.First(x => x.Key == "upload").Value;
                     connectionProblem = false;
                 }
                 catch (Exception)
@@ -107,8 +106,8 @@ namespace ComputerMonitorClient
                 {
                     synchronizer.SaveTodayDate(modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value, modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value);
                     var todayData = synchronizer.TodayData();
-                    this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.First(x => x.Key == "download").Value;
-                    this.modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.First(x => x.Key == "upload").Value;
+                    modelHolders.First(x => x.Typ == ModelUiTyp.TodayDownload).Value = todayData.First(x => x.Key == "download").Value;
+                    modelHolders.First(x => x.Typ == ModelUiTyp.TodayUpload).Value = todayData.First(x => x.Key == "upload").Value;
                 }
                 backgroudWorker.ReportProgress(0);
             }
@@ -117,53 +116,42 @@ namespace ComputerMonitorClient
         private void MonitoringReport(object sender, ProgressChangedEventArgs e)
         {
             Unit unit = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default["unit"].ToString());
-            foreach (ModelHolder model in modelHolders)
+
+            var models = modelHolders;
+            var currentDownUp = models.Where(x => x.Typ == ModelUiTyp.CurrentDownload || x.Typ == ModelUiTyp.CurrentUpload);
+            var otherDownUP = models.Where(x => x.Typ != ModelUiTyp.CurrentDownload && x.Typ != ModelUiTyp.CurrentUpload);
+
+            DateTime now = DateTime.Now;
+            foreach (var item in currentDownUp)
             {
-                if (model.Typ == ModelUiTyp.CurrentDownload || model.Typ == ModelUiTyp.CurrentUpload)
+                item.Label.Content = string.Format("{0} KB/s", item.Value.ToString("n"));
+                if (item.Typ == ModelUiTyp.CurrentDownload)
                 {
-                    model.Label.Content = string.Format("{0} KB/s", model.Value.ToString("n"));
-                    if (model.Typ == ModelUiTyp.CurrentDownload)
+                    series[0].Values.Add(new UsageViewModel
                     {
-                        if (series[0].Values.Count > 30)
-                        {
-                            series[0].Values.RemoveAt(0);
-                        }
-                        series[0].Values.Add(new UsageViewModel
-                        {
-                            Usage = model.Value,
-                            Time = DateTime.Now
-                        });
-                    }
-                    else
-                    {
-                        if (series[1].Values.Count > 30)
-                        {
-                            series[1].Values.RemoveAt(0);
-                        }
-                        series[1].Values.Add(new UsageViewModel
-                        {
-                            Usage = model.Value,
-                            Time = DateTime.Now
-                        });
-                    }
+                        Usage = item.Value,
+                        Time = now
+                    });
                 }
                 else
                 {
-                    switch (unit)
+                    series[1].Values.Add(new UsageViewModel
                     {
-                        case Unit.KB:
-                            model.Label.Content = string.Format("{0} KB", (model.Value).ToString("n"));
-                            break;
-                        case Unit.MB:
-                            model.Label.Content = string.Format("{0} MB", (model.Value / 1024d).ToString("n"));
-                            break;
-                        case Unit.GB:
-                            model.Label.Content = string.Format("{0} GB", (model.Value / 1024d / 1024d).ToString("n"));
-                            break;
-                        default:
-                            break;
-                    }
+                        Usage = item.Value,
+                        Time = now
+                    });
                 }
+            }
+
+            foreach (var item in otherDownUP)
+            {
+                item.Label.Content = string.Format("{0} {1}", (item.Value / Math.Pow(1024d, (byte)unit)).ToString("n"), unit.ToString());
+            }
+
+            if (series[0].Values.Count > 30 && series[1].Values.Count > 30)
+            {
+                series[0].Values.RemoveAt(0);
+                series[1].Values.RemoveAt(0);
             }
         }
     }
@@ -178,7 +166,7 @@ namespace ComputerMonitorClient
         {
             get
             {
-                return this.value;
+                return value;
             }
             set
             {
@@ -190,7 +178,7 @@ namespace ComputerMonitorClient
         {
             get
             {
-                return this.label;
+                return label;
             }
         }
 
@@ -198,7 +186,7 @@ namespace ComputerMonitorClient
         {
             get
             {
-                return this.typ;
+                return typ;
             }
         }
 
