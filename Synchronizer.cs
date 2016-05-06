@@ -10,14 +10,8 @@ namespace ComputerMonitorClient
 {
     public class Synchronizer
     {
-        private double newDownload;
-        private double newUpload;
-        private DateTime newDate;
-
-        private double oldDownload;
-        private double oldUpload;
-        private DateTime oldDate;
-        private bool oldSynchronized;
+        private SynchronizerData newData = new SynchronizerData();
+        private SynchronizerData oldData = new SynchronizerData();
 
         private BackgroundWorker backgroundSynchronizer;
 
@@ -25,20 +19,16 @@ namespace ComputerMonitorClient
         {
             LoadFromSettings();
 
-            if (newDate == default(DateTime))
+            if (newData.Date == default(DateTime))
             {
-                oldSynchronized = true;
+                oldData.Synchronized = true;
             }
-            else if (newDate.Date != DateTime.Today.Date)
+            else if (newData.Date != DateTime.Today.Date)
             {
-                oldDownload = newDownload;
-                oldUpload = newUpload;
-                oldDate = newDate;
-                oldSynchronized = false;
+                oldData = newData.CopyWithoutSynch();
+                oldData.Synchronized = false;
 
-                newDownload = 0d;
-                newUpload = 0d;
-                newDate = DateTime.Today.Date;
+                newData.ResetData();
 
                 SaveInSettings();
             }
@@ -49,29 +39,25 @@ namespace ComputerMonitorClient
         public IDictionary<String, Double> TodayData()
         {
             IDictionary<String, Double> result = new Dictionary<String, Double>();
-            result.Add(new KeyValuePair<String, Double>("download", newDownload));
-            result.Add(new KeyValuePair<String, Double>("upload", newUpload));
+            result.Add(new KeyValuePair<String, Double>("download", newData.Download));
+            result.Add(new KeyValuePair<String, Double>("upload", newData.Upload));
             return result;
         }
 
         public void SaveTodayDate(double download, double upload)
         {
-            if (newDate == default(DateTime) || newDate.Date == DateTime.Today.Date)
+            if (newData.Date == default(DateTime) || newData.Date == DateTime.Today.Date)
             {
-                newDate = DateTime.Today.Date;
-                newDownload = download;
-                newUpload = upload;
+                newData.Date = DateTime.Today.Date;
+                newData.Download = download;
+                newData.Upload = upload;
             }
             else
             {
-                oldDate = newDate;
-                oldDownload = newDownload;
-                oldUpload = newUpload;
-                oldSynchronized = false;
+                oldData = newData.CopyWithoutSynch();
+                oldData.Synchronized = false;
 
-                newDate = DateTime.Today.Date;
-                newDownload = 0;
-                newUpload = 0;
+                newData.ResetData();
             }
             SaveInSettings();
             StartSynchronizing();
@@ -82,13 +68,13 @@ namespace ComputerMonitorClient
             string token = Properties.Settings.Default["token"].ToString();
             int deviceId = (int)Properties.Settings.Default["deviceId"];
 
-            double download = newDownload;
-            double upload = newUpload;
+            double download = newData.Download;
+            double upload = newData.Upload;
 
             List<Usage> usageList = Client.LoadUsage(token, deviceId);
             if (usageList != null)
             {
-                download += usageList.Sum(x=>x.download);
+                download += usageList.Sum(x => x.download);
                 upload += usageList.Sum(x => x.upload);
             }
 
@@ -100,32 +86,19 @@ namespace ComputerMonitorClient
 
         private void LoadFromSettings()
         {
-            this.newDownload = (double)Properties.Settings.Default["newdownload"];
-            this.newUpload = (double)Properties.Settings.Default["newupload"];
-            this.newDate = (DateTime)Properties.Settings.Default["newdate"];
-
-            this.oldDownload = (double)Properties.Settings.Default["olddownload"];
-            this.oldUpload = (double)Properties.Settings.Default["oldupload"];
-            this.oldDate = (DateTime)Properties.Settings.Default["olddate"];
-            this.oldSynchronized = (bool)Properties.Settings.Default["oldsynchronized"];
+            newData.LoadAsNewData();
+            oldData.LoadAsOldData();
         }
 
         private void SaveInSettings()
         {
-            Properties.Settings.Default["newdownload"] = this.newDownload;
-            Properties.Settings.Default["newupload"] = this.newUpload;
-            Properties.Settings.Default["newdate"] = this.newDate.Date;
-
-            Properties.Settings.Default["olddownload"] = this.oldDownload;
-            Properties.Settings.Default["oldupload"] = this.oldUpload;
-            Properties.Settings.Default["olddate"] = this.oldDate.Date;
-            Properties.Settings.Default["oldsynchronized"] = this.oldSynchronized;
-            Properties.Settings.Default.Save();
+            newData.SaveAsNewData();
+            oldData.SaveAsOldData();
         }
 
         public void StartSynchronizing()
         {
-            if (!oldSynchronized)
+            if (!oldData.Synchronized)
             {
                 backgroundSynchronizer = new BackgroundWorker();
                 backgroundSynchronizer.DoWork += new DoWorkEventHandler(SynchronizeBackground);
@@ -145,11 +118,11 @@ namespace ComputerMonitorClient
                 try
                 {
                     Status status;
-                    status = Client.AddUsage(token, deviceId, oldDownload, oldUpload, oldDate);
-                    oldSynchronized = status.status;
+                    status = Client.AddUsage(token, deviceId, oldData.Download, oldData.Upload, oldData.Date);
+                    oldData.Synchronized = status.status;
                     error = false;
                 }
-                catch (Exception ex )
+                catch (Exception)
                 {
                     error = true;
                     System.Threading.Thread.Sleep(5000);
@@ -161,11 +134,64 @@ namespace ComputerMonitorClient
         private void SynchronizeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             SaveInSettings();
-            if (!oldSynchronized)
+            if (!oldData.Synchronized)
             {
                 // TODO Token or deviceId is invalid
                 throw new NotImplementedException("Token or deviceId invalid");
             }
+        }
+    }
+
+    public class SynchronizerData
+    {
+        public double Download { get; set; }
+        public double Upload { get; set; }
+        public DateTime Date { get; set; }
+        public bool Synchronized { get; set; }
+
+        public SynchronizerData CopyWithoutSynch()
+        {
+            return new SynchronizerData()
+            {
+                Download = Download,
+                Upload = Upload,
+                Date = new DateTime(Date.Ticks)
+            };
+        }
+        public void ResetData()
+        {
+            Download = 0d;
+            Upload = 0d;
+            Date = DateTime.Today.Date;
+        }
+        public void SaveAsNewData()
+        {
+            Properties.Settings.Default["newdownload"] = Download;
+            Properties.Settings.Default["newupload"] = Upload;
+            Properties.Settings.Default["newdate"] = Date.Date;
+            Properties.Settings.Default.Save();
+        }
+        public void SaveAsOldData()
+        {
+            Properties.Settings.Default["olddownload"] = Download;
+            Properties.Settings.Default["oldupload"] = Upload;
+            Properties.Settings.Default["olddate"] = Date.Date;
+            Properties.Settings.Default["oldsynchronized"] = Synchronized;
+            Properties.Settings.Default.Save();
+        }
+        public void LoadAsNewData()
+        {
+            Download = (double)Properties.Settings.Default["newdownload"];
+            Upload = (double)Properties.Settings.Default["newupload"];
+            Date = (DateTime)Properties.Settings.Default["newdate"];
+        }
+
+        public void LoadAsOldData()
+        {
+            Download = (double)Properties.Settings.Default["olddownload"];
+            Upload = (double)Properties.Settings.Default["oldupload"];
+            Date = (DateTime)Properties.Settings.Default["olddate"];
+            Synchronized = (bool)Properties.Settings.Default["oldsynchronized"];
         }
     }
 }
