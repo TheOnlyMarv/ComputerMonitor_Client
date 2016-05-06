@@ -14,16 +14,22 @@ namespace ComputerMonitorClient.RemoteClasses
         public string token { get; set; }
     }
 
-    public class Device
+    public partial class Device
     {
         public int id { get; set; }
         public string name { get; set; }
         public DateTime? last_used { get; set; }
     }
+
     public class Usage
     {
         public double upload { get; set; }
         public double download { get; set; }
         public string date { get; set; }
+    }
+
+    public partial class Device
+    {
+        public IList<Usage> usage { get; set; }
     }
 }

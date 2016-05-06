@@ -94,37 +94,37 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Client.cs" />
-    <Compile Include="DevicePage.xaml.cs">
+    <Compile Include="Pages\DevicePage.xaml.cs">
       <DependentUpon>DevicePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IMainSwitch.cs" />
-    <Compile Include="IStartSwitch.cs" />
-    <Compile Include="LoginPage.xaml.cs">
+    <Compile Include="Interfaces\IMainSwitch.cs" />
+    <Compile Include="Interfaces\IStartSwitch.cs" />
+    <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MeasuringPage.xaml.cs">
+    <Compile Include="Pages\MeasuringPage.xaml.cs">
       <DependentUpon>MeasuringPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Monitoring.cs" />
-    <Compile Include="OptionsPage.xaml.cs">
+    <Compile Include="Pages\OptionsPage.xaml.cs">
       <DependentUpon>OptionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="RemoteClasses.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="StartWindow.xaml.cs">
+    <Compile Include="Windows\StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Synchronizer.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="UsageViewModel.cs" />
-    <Page Include="DevicePage.xaml">
+    <Page Include="Pages\DevicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginPage.xaml">
+    <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,19 +132,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MeasuringPage.xaml">
+    <Page Include="Pages\MeasuringPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OptionsPage.xaml">
+    <Page Include="Pages\OptionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartWindow.xaml">
+    <Page Include="Windows\StartWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
