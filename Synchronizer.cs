@@ -12,6 +12,7 @@ namespace ComputerMonitorClient
     {
         private SynchronizerData newData = new SynchronizerData();
         private SynchronizerData oldData = new SynchronizerData();
+        private bool synchInProgress = false;
 
         private BackgroundWorker backgroundSynchronizer;
 
@@ -92,7 +93,7 @@ namespace ComputerMonitorClient
 
         public void StartSynchronizing()
         {
-            if (!oldData.Synchronized)
+            if (!oldData.Synchronized && !synchInProgress)
             {
                 backgroundSynchronizer = new BackgroundWorker();
                 backgroundSynchronizer.DoWork += new DoWorkEventHandler(SynchronizeBackground);
@@ -107,6 +108,7 @@ namespace ComputerMonitorClient
             int deviceId = (int)Properties.Settings.Default[Utilities.DEVICE_ID];
             bool error = false;
 
+            synchInProgress = true;
             do
             {
                 try
@@ -123,6 +125,7 @@ namespace ComputerMonitorClient
                 }
 
             } while (error);
+            synchInProgress = false;
         }
 
         private void SynchronizeComplete(object sender, RunWorkerCompletedEventArgs e)
