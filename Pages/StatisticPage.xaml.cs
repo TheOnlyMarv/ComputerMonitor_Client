@@ -22,8 +22,6 @@ namespace ComputerMonitorClient.Pages
     public partial class StatisticPage : Page, IMainSwitch
     {
         private IMainSwitch context;
-        public SeriesCollection SeriesThisDevice { get; set; }
-        public SeriesCollection SeriesAllDevices { get; set; }
         private StatisticManager statisticManager;
 
         public StatisticPage(IMainSwitch context)
@@ -31,10 +29,15 @@ namespace ComputerMonitorClient.Pages
             InitializeComponent();
             this.context = context;
 
-            SeriesThisDevice = new SeriesCollection();
-            SeriesAllDevices = new SeriesCollection();
             DataContext = this;
-            statisticManager = new StatisticManager(SeriesThisDevice, SeriesAllDevices);
+            statisticManager = new StatisticManager(new StatisticComponents()
+            {
+                BtnNext = btnNextDay,
+                BtnPrevious = btnPreviousDay,
+                GroupBox = groupThisDevice,
+                TextDownload = labelCurrentDownload,
+                TextUpload = labelCurrentUpload
+            });
             statisticManager.Start();
         }
 

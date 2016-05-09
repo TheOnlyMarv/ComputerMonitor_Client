@@ -10,24 +10,21 @@
 
 
     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-        <GroupBox x:Name="groupThisDevice" Header="This devices in a week" VerticalAlignment="Top" Height="200" FontFamily="Consolas">
-            <Grid>
-                <lvc:PieChart LegendLocation="Right" Series="{Binding SeriesThisDevice}" >
-                    <lvc:PieChart.AxisY>
-                        <lvc:Axis Title="Sold Items"/>
-                    </lvc:PieChart.AxisY>
-                    <lvc:PieChart.AxisX>
-                        <lvc:Axis Title="Week"/>
-                    </lvc:PieChart.AxisX>
-                </lvc:PieChart>
-            </Grid>
-        </GroupBox>
-        <GroupBox x:Name="groupAllDevices" Header="All devices" VerticalAlignment="Top" Height="200" FontFamily="Consolas" Margin="0,1,0,0">
-            <Grid>
-
-            </Grid>
-        </GroupBox>
+        <Grid>
+            <GroupBox x:Name="groupThisDevice" Header="Yesterday" VerticalAlignment="Top" Height="79" FontFamily="Consolas">
+                <Grid VerticalAlignment="Center">
+                    <Label x:Name="labelDescCurrentDownload" Content="Download:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="labelDescCurrentUpload" Content="Upload:" HorizontalAlignment="Left" Margin="23,19,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="labelCurrentDownload" Content="0.00 KB" HorizontalAlignment="Left" Margin="82,0,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="labelCurrentUpload" Content="0.00 KB" HorizontalAlignment="Left" Margin="82,19,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </GroupBox>
+            <StackPanel Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" >
+                <Button Name="btnPreviousDay" FontFamily="Marlett" Margin="4,4,4,4" Content="3" ToolTip="Previous Day"/>
+                <Button Name="btnNextDay" FontFamily="Marlett" Margin="4,4,10,4" Content="4" ToolTip="Next Day"/>
+            </StackPanel>
+        </Grid>
+        <GroupBox x:Name="groupAllDevices" Header="All devices" VerticalAlignment="Top" Height="321" FontFamily="Consolas" Margin="0,1,0,0"/>
         <Button x:Name="button" Content="Back" Margin="0,1,0,0" Click="button_Click"/>
     </StackPanel>
-
 </Page>
