@@ -11,5 +11,6 @@ namespace ComputerMonitorClient
         void CloseApplication();
         void SwitchToOptionPage();
         void SwitchToMeasuringPage();
+        void SwitchToStatisticPage();
     }
 }

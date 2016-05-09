@@ -88,6 +88,11 @@ namespace ComputerMonitorClient
             this.CloseApplication();
         }
 
+        private void btnStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchToStatisticPage();
+        }
+
         public void CloseApplication()
         {
             context.CloseApplication();
@@ -102,5 +107,11 @@ namespace ComputerMonitorClient
         {
             // Useless
         }
+
+        public void SwitchToStatisticPage()
+        {
+            context.SwitchToStatisticPage();
+        }
+
     }
 }

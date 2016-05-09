@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Hardcodet.Wpf.TaskbarNotification;
+using ComputerMonitorClient.Pages;
 
 namespace ComputerMonitorClient
 {
@@ -22,6 +23,7 @@ namespace ComputerMonitorClient
     {
         private OptionsPage optionsPage;
         private MeasuringPage measuringPage;
+        private StatisticPage statisticPage;
         private bool statedMinimized = false;
 
         public MainWindow()
@@ -77,6 +79,15 @@ namespace ComputerMonitorClient
                 measuringPage = new MeasuringPage(this);
             }
             mainFrame.Navigate(measuringPage);
+        }
+
+        public void SwitchToStatisticPage()
+        {
+            if (statisticPage == null)
+            {
+                statisticPage = new StatisticPage(this);
+            }
+            mainFrame.Navigate(statisticPage);
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

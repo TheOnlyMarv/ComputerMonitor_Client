@@ -123,5 +123,10 @@ namespace ComputerMonitorClient
         {
             context.SwitchToMeasuringPage();
         }
+
+        public void SwitchToStatisticPage()
+        {
+            // Useless
+        }
     }
 }

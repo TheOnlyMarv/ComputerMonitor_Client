@@ -25,7 +25,7 @@ namespace ComputerMonitorClient.RemoteClasses
     {
         public double upload { get; set; }
         public double download { get; set; }
-        public string date { get; set; }
+        public DateTime date { get; set; }
     }
 
     public partial class Device
