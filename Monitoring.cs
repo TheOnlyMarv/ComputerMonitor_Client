@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using LiveCharts;
+using System.Diagnostics;
 
 namespace ComputerMonitorClient
 {
@@ -92,11 +93,11 @@ namespace ComputerMonitorClient
                             break;
                         case ModelUiTyp.TodayDownload:
                         case ModelUiTyp.TotalDownload:
-                            model.Value += download;
+                            model.Value += download >= 0 ? download : 0;
                             break;
                         case ModelUiTyp.TodayUpload:
                         case ModelUiTyp.TotalUpload:
-                            model.Value += upload;
+                            model.Value += upload >= 0 ? upload : 0;
                             break;
                         default:
                             break;
