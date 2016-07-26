@@ -14,8 +14,9 @@
         <ComboBox x:Name="comboNetworkAdapter" VerticalAlignment="Top" Margin="111,0,0,0" VerticalContentAlignment="Center" DataContextChanged="comboNetworkAdapter_DataContextChanged" FontFamily="Consolas"/>
         <ComboBox x:Name="comboUnit" VerticalAlignment="Top" Margin="111,27,0,0" VerticalContentAlignment="Center" DataContextChanged="comboUnit_DataContextChanged" FontFamily="Consolas" 
                   />
-        <Button x:Name="btnSave" Content="Save" Margin="0,73,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="btnSave_Click" FontFamily="Consolas"/>
-        <Button x:Name="btnCancel" Content="Cancel" Margin="0,73,90,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" FontFamily="Consolas" Click="btnCancel_Click"/>
+        <Image x:Name="qrImage" HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="100" Margin="0,73,0,0" />
+        <Button x:Name="btnSave" Content="Save" Margin="0,180,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="btnSave_Click" FontFamily="Consolas"/>
+        <Button x:Name="btnCancel" Content="Cancel" Margin="0,180,90,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" FontFamily="Consolas" Click="btnCancel_Click"/>
         <CheckBox x:Name="checkStartup" Content="Start with Windows" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="111,52,0,0" FontFamily="Consolas"/>
 
     </Grid>
