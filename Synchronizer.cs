@@ -63,8 +63,8 @@ namespace ComputerMonitorClient
 
         public SynchronizerData LoadTotalData()
         {
-            string token = Properties.Settings.Default[Utilities.TOKEN].ToString();
-            int deviceId = (int)Properties.Settings.Default[Utilities.DEVICE_ID];
+            string token = Properties.Settings.Default[SettingFields.TOKEN].ToString();
+            int deviceId = (int)Properties.Settings.Default[SettingFields.DEVICE_ID];
 
             double download = newData.Download;
             double upload = newData.Upload;
@@ -104,8 +104,8 @@ namespace ComputerMonitorClient
 
         private void SynchronizeBackground(object sender, DoWorkEventArgs e)
         {
-            string token = Properties.Settings.Default[Utilities.TOKEN].ToString();
-            int deviceId = (int)Properties.Settings.Default[Utilities.DEVICE_ID];
+            string token = Properties.Settings.Default[SettingFields.TOKEN].ToString();
+            int deviceId = (int)Properties.Settings.Default[SettingFields.DEVICE_ID];
             bool error = false;
 
             synchInProgress = true;
@@ -163,32 +163,32 @@ namespace ComputerMonitorClient
         }
         public void SaveAsNewData()
         {
-            Properties.Settings.Default[Utilities.NEW_DOWNLOAD] = Download;
-            Properties.Settings.Default[Utilities.NEW_UPLOAD] = Upload;
-            Properties.Settings.Default[Utilities.NEW_DATE] = Date.Date;
+            Properties.Settings.Default[SettingFields.NEW_DOWNLOAD] = Download;
+            Properties.Settings.Default[SettingFields.NEW_UPLOAD] = Upload;
+            Properties.Settings.Default[SettingFields.NEW_DATE] = Date.Date;
             Properties.Settings.Default.Save();
         }
         public void SaveAsOldData()
         {
-            Properties.Settings.Default[Utilities.OLD_DOWNLOAD] = Download;
-            Properties.Settings.Default[Utilities.OLD_UPLOAD] = Upload;
-            Properties.Settings.Default[Utilities.OLD_DATE] = Date.Date;
-            Properties.Settings.Default[Utilities.OLD_SYNCHRONIZED] = Synchronized;
+            Properties.Settings.Default[SettingFields.OLD_DOWNLOAD] = Download;
+            Properties.Settings.Default[SettingFields.OLD_UPLOAD] = Upload;
+            Properties.Settings.Default[SettingFields.OLD_DATE] = Date.Date;
+            Properties.Settings.Default[SettingFields.OLD_SYNCHRONIZED] = Synchronized;
             Properties.Settings.Default.Save();
         }
         public void LoadAsNewData()
         {
-            Download = (double)Properties.Settings.Default[Utilities.NEW_DOWNLOAD];
-            Upload = (double)Properties.Settings.Default[Utilities.NEW_UPLOAD];
-            Date = (DateTime)Properties.Settings.Default[Utilities.NEW_DATE];
+            Download = (double)Properties.Settings.Default[SettingFields.NEW_DOWNLOAD];
+            Upload = (double)Properties.Settings.Default[SettingFields.NEW_UPLOAD];
+            Date = (DateTime)Properties.Settings.Default[SettingFields.NEW_DATE];
         }
 
         public void LoadAsOldData()
         {
-            Download = (double)Properties.Settings.Default[Utilities.OLD_DOWNLOAD];
-            Upload = (double)Properties.Settings.Default[Utilities.OLD_UPLOAD];
-            Date = (DateTime)Properties.Settings.Default[Utilities.OLD_DATE];
-            Synchronized = (bool)Properties.Settings.Default[Utilities.OLD_SYNCHRONIZED];
+            Download = (double)Properties.Settings.Default[SettingFields.OLD_DOWNLOAD];
+            Upload = (double)Properties.Settings.Default[SettingFields.OLD_UPLOAD];
+            Date = (DateTime)Properties.Settings.Default[SettingFields.OLD_DATE];
+            Synchronized = (bool)Properties.Settings.Default[SettingFields.OLD_SYNCHRONIZED];
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using QRCoder;
+﻿using ComputerMonitorClient.WebSocket;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,18 +43,17 @@ namespace ComputerMonitorClient
 
         private void createQrCode()
         {
+            WebSocketServer wss = new WebSocketServer();
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrData = qrGenerator.CreateQrCode("HIER STEHT EINE IP", QRCodeGenerator.ECCLevel.Q);
+            QRCodeData qrData = qrGenerator.CreateQrCode(wss.Initialize(), QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrData);
 
-            var bitmap = qrCode.GetGraphic(20);
-            qrImage.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                bitmap.GetHbitmap(),
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions()
-                );
-            //qrImage.Source = ;//BitmapSource.Create(bitmap.Width, bitmap.Height, bitmap.VerticalResolution, bitmap.HorizontalResolution, PixelFormats.Bgr32, null,)
+            var bitmap = qrCode.GetGraphic(50);
+            qrImage.Source = Utilities.convertBitmapToBitmapSource(bitmap);
+
+            
+            Thread serverThread = new Thread(new ThreadStart(wss.StartServer));
+            serverThread.Start();
         }
 
         public OptionsPage(IMainSwitch context) : this()
@@ -62,13 +63,13 @@ namespace ComputerMonitorClient
 
         private void comboUnit_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[Utilities.UNIT].ToString());
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[SettingFields.UNIT].ToString());
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default[Utilities.UNIT] = (byte)(Unit)comboUnit.SelectedItem;
-            Properties.Settings.Default[Utilities.ADAPTER] = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
+            Properties.Settings.Default[SettingFields.UNIT] = (byte)(Unit)comboUnit.SelectedItem;
+            Properties.Settings.Default[SettingFields.ADAPTER] = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
             Properties.Settings.Default.Save();
             StartUp((bool)checkStartup.IsChecked);
 
@@ -78,7 +79,7 @@ namespace ComputerMonitorClient
 
         private void comboNetworkAdapter_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            string adapter = Properties.Settings.Default[Utilities.ADAPTER].ToString();
+            string adapter = Properties.Settings.Default[SettingFields.ADAPTER].ToString();
             comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
         }
 
@@ -91,9 +92,9 @@ namespace ComputerMonitorClient
         private void SettingsReset()
         {
             checkStartup.IsChecked = IsOnStartUp();
-            string adapter = Properties.Settings.Default[Utilities.ADAPTER].ToString();
+            string adapter = Properties.Settings.Default[SettingFields.ADAPTER].ToString();
             comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
-            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[Utilities.UNIT].ToString());
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[SettingFields.UNIT].ToString());
         }
 
         private void StartUp(bool addOnStartup)
