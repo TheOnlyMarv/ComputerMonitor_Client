@@ -93,6 +93,9 @@
       <HintPath>..\packages\QRCoder.1.1.9\lib\net40\UnityEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebSockets">
+      <HintPath>C:\Users\Marvin\Desktop\WebSocket\WebSockets\bin\Debug\WebSockets.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -116,6 +119,10 @@
       <DependentUpon>StatisticPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities.cs" />
+    <Compile Include="WebSocket\Server\ServiceFactory.cs" />
+    <Compile Include="WebSocket\Server\ServerWebSocketService.cs" />
+    <Compile Include="WebSocket\WebSocketLogger.cs" />
+    <Compile Include="WebSocket\WebSocketServer.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
