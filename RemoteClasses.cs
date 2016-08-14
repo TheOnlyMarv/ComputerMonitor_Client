@@ -32,4 +32,20 @@ namespace ComputerMonitorClient.RemoteClasses
     {
         public IList<Usage> usage { get; set; }
     }
+
+    public class RemoteAction
+    {
+        public Action? action { get; set; }
+        public int value { get; set; }
+    }
+
+    public class RemoteResponse
+    {
+        public int status { get; set; }
+        public string message { get; set; }
+    }
+
+    public enum Action{
+        Volumn
+    }
 }

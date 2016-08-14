@@ -48,7 +48,8 @@ namespace ComputerMonitorClient.WebSocket.Server
                     // you can support different kinds of web socket connections using a different path
                     if (connectionDetails.Path == WebSocketSettings.path)
                     {
-                        return new ServerWebSocketService(connectionDetails.Stream, connectionDetails.TcpClient, connectionDetails.Header, _logger);
+                        WebSocketSettings.WsServer = new ServerWebSocketService(connectionDetails.Stream, connectionDetails.TcpClient, connectionDetails.Header, _logger);
+                        return WebSocketSettings.WsServer;
                     }
                     break;
                 case ConnectionType.Http:

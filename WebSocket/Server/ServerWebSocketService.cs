@@ -10,7 +10,7 @@ using WebSockets.Server.WebSocket;
 
 namespace ComputerMonitorClient.WebSocket.Server
 {
-    internal class ServerWebSocketService : WebSocketService
+    public class ServerWebSocketService : WebSocketService
     {
         private readonly IWebSocketLogger _logger;
 
@@ -22,9 +22,16 @@ namespace ComputerMonitorClient.WebSocket.Server
 
         protected override void OnTextFrame(string text)
         {
-            string response = "ServerABC: " + text;
-            base.Send(response);
-            _logger.Information(this.GetType(), response);
+            ServerTaskManager.GetInstance().OnMessageReceived(text);
+            //string response = "ServerABC: " + text;
+            //base.Send(response);
+            //_logger.Information(this.GetType(), response);
+        }
+
+        public void SendMessage(string text)
+        {
+            base.Send(text);
+            //_logger.Information(this.GetType(), text);
         }
     }
 }
