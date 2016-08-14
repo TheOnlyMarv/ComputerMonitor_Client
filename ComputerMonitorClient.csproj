@@ -62,6 +62,10 @@
       <HintPath>..\packages\LiveCharts.0.6.7.0\lib\net452\LiveCharts.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NetworkMonitor">
       <HintPath>E:\CloudSync\Other\Visual Basic Projekte\ComputerMonitor\ComputerMonitor\NetworkMonitor.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -119,6 +123,7 @@
       <DependentUpon>StatisticPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities.cs" />
+    <Compile Include="WebSocket\ServerTaskManager.cs" />
     <Compile Include="WebSocket\Server\ServiceFactory.cs" />
     <Compile Include="WebSocket\Server\ServerWebSocketService.cs" />
     <Compile Include="WebSocket\WebSocketLogger.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComputerMonitorClient.WebSocket.Server;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace ComputerMonitorClient
     {
         public static readonly string path = "/cm";
         public static readonly int port = 1337;
+        public static ServerWebSocketService WsServer { get; set; }
     }
 
     public static class Utilities
