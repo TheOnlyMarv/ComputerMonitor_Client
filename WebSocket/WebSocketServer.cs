@@ -10,8 +10,10 @@ using WebSockets.Common;
 
 namespace ComputerMonitorClient.WebSocket
 {
-    class WebSocketServer
+    public class WebSocketServer
     {
+        private bool interrupt;
+
         public string Initialize()
         {
             return "ws://" + Utilities.GetLocalIPAddress() + ":" + WebSocketSettings.port + WebSocketSettings.path ;
@@ -20,7 +22,7 @@ namespace ComputerMonitorClient.WebSocket
         public void StartServer()
         {
             IWebSocketLogger logger = new WebSocketLogger();
-
+            interrupt = false;
             try
             {
                 ServiceFactory serviceFactory = new ServiceFactory("", logger);
@@ -28,7 +30,7 @@ namespace ComputerMonitorClient.WebSocket
                 using (WebServer server = new WebServer(serviceFactory,logger))
                 {
                     server.Listen(WebSocketSettings.port);
-                    while (true)
+                    while (true && !interrupt)
                     {
                         Thread.Sleep(5000);
                     }
@@ -38,6 +40,11 @@ namespace ComputerMonitorClient.WebSocket
             {
                 logger.Error(typeof(WebSocketServer), ex);
             }
+        }
+
+        public void StopServer()
+        {
+            interrupt = true;
         }
     }
 }
