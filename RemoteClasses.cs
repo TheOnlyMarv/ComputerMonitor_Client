@@ -46,6 +46,7 @@ namespace ComputerMonitorClient.RemoteClasses
     }
 
     public enum Action{
-        Volumn
+        Volumn,
+        Information
     }
 }
