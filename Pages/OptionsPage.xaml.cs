@@ -43,17 +43,10 @@ namespace ComputerMonitorClient
 
         private void createQrCode()
         {
-            WebSocketServer wss = new WebSocketServer();
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrData = qrGenerator.CreateQrCode(wss.Initialize(), QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrData);
+            QRCode qrCode = WebServerHoldings.getInstance().GetQrCode();
 
             var bitmap = qrCode.GetGraphic(50);
             qrImage.Source = Utilities.convertBitmapToBitmapSource(bitmap);
-
-            
-            Thread serverThread = new Thread(new ThreadStart(wss.StartServer));
-            serverThread.Start();
         }
 
         public OptionsPage(IMainSwitch context) : this()

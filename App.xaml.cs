@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComputerMonitorClient.WebSocket;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -38,6 +39,11 @@ namespace ComputerMonitorClient
             }
             Application.Current.MainWindow = window;
             window.Show();
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            WebServerHoldings.getInstance().StopWebServerThread();
         }
     }
 }

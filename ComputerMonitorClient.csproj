@@ -126,6 +126,7 @@
     <Compile Include="WebSocket\ServerTaskManager.cs" />
     <Compile Include="WebSocket\Server\ServiceFactory.cs" />
     <Compile Include="WebSocket\Server\ServerWebSocketService.cs" />
+    <Compile Include="WebSocket\WebServerHoldings.cs" />
     <Compile Include="WebSocket\WebSocketLogger.cs" />
     <Compile Include="WebSocket\WebSocketServer.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
