@@ -1,9 +1,12 @@
-﻿using System;
+﻿using ComputerMonitorClient.WebSocket;
+using QRCoder;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,6 +37,16 @@ namespace ComputerMonitorClient
             comboUnit.ItemsSource = Enum.GetValues(typeof(Unit)).Cast<Unit>();
             comboNetworkAdapter.ItemsSource = adapters;
             checkStartup.IsChecked = IsOnStartUp();
+
+            createQrCode();
+        }
+
+        private void createQrCode()
+        {
+            QRCode qrCode = WebServerHoldings.getInstance().GetQrCode();
+
+            var bitmap = qrCode.GetGraphic(50);
+            qrImage.Source = Utilities.convertBitmapToBitmapSource(bitmap);
         }
 
         public OptionsPage(IMainSwitch context) : this()
@@ -43,13 +56,13 @@ namespace ComputerMonitorClient
 
         private void comboUnit_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[Utilities.UNIT].ToString());
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[SettingFields.UNIT].ToString());
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default[Utilities.UNIT] = (byte)(Unit)comboUnit.SelectedItem;
-            Properties.Settings.Default[Utilities.ADAPTER] = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
+            Properties.Settings.Default[SettingFields.UNIT] = (byte)(Unit)comboUnit.SelectedItem;
+            Properties.Settings.Default[SettingFields.ADAPTER] = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
             Properties.Settings.Default.Save();
             StartUp((bool)checkStartup.IsChecked);
 
@@ -59,7 +72,7 @@ namespace ComputerMonitorClient
 
         private void comboNetworkAdapter_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            string adapter = Properties.Settings.Default[Utilities.ADAPTER].ToString();
+            string adapter = Properties.Settings.Default[SettingFields.ADAPTER].ToString();
             comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
         }
 
@@ -72,9 +85,9 @@ namespace ComputerMonitorClient
         private void SettingsReset()
         {
             checkStartup.IsChecked = IsOnStartUp();
-            string adapter = Properties.Settings.Default[Utilities.ADAPTER].ToString();
+            string adapter = Properties.Settings.Default[SettingFields.ADAPTER].ToString();
             comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
-            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[Utilities.UNIT].ToString());
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[SettingFields.UNIT].ToString());
         }
 
         private void StartUp(bool addOnStartup)
@@ -101,7 +114,7 @@ namespace ComputerMonitorClient
             {
                 Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 Assembly curAssembly = Assembly.GetExecutingAssembly();
-                return key.GetValue(curAssembly.GetName().Name) != null; 
+                return key.GetValue(curAssembly.GetName().Name) != null;
             }
             catch
             {
@@ -127,6 +140,11 @@ namespace ComputerMonitorClient
         public void SwitchToStatisticPage()
         {
             // Useless
+        }
+
+        private void btnCancel_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            WebSocketSettings.WsServer.SendMessage("Testnachricht!");
         }
     }
 }

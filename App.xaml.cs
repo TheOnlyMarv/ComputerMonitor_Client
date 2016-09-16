@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComputerMonitorClient.WebSocket;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -17,11 +18,11 @@ namespace ComputerMonitorClient
         {
             
             Window window;
-            if (String.IsNullOrEmpty(ComputerMonitorClient.Properties.Settings.Default[Utilities.TOKEN].ToString()))
+            if (String.IsNullOrEmpty(ComputerMonitorClient.Properties.Settings.Default[SettingFields.TOKEN].ToString()))
             {
                 window = new StartWindow(false);
             }
-            else if (Int32.Parse(ComputerMonitorClient.Properties.Settings.Default[Utilities.DEVICE_ID].ToString()) < 0)
+            else if (Int32.Parse(ComputerMonitorClient.Properties.Settings.Default[SettingFields.DEVICE_ID].ToString()) < 0)
             {
                 window = new StartWindow(true);
             }
@@ -38,6 +39,11 @@ namespace ComputerMonitorClient
             }
             Application.Current.MainWindow = window;
             window.Show();
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            WebServerHoldings.getInstance().StopWebServerThread();
         }
     }
 }

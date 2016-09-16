@@ -1,4 +1,5 @@
-﻿using LiveCharts;
+﻿using ComputerMonitorClient.WebSocket;
+using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,12 @@ namespace ComputerMonitorClient
             InitializeComponent();
             InitializeChart();
             StartMonitoring();
+            StartRemoteControl();
+        }
+
+        private void StartRemoteControl()
+        {
+            WebServerHoldings.getInstance().StartWebServerOnNewThread();
         }
 
         private void InitializeChart()
