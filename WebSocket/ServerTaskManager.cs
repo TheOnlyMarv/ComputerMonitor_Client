@@ -1,4 +1,5 @@
-﻿using ComputerMonitorClient.RemoteClasses;
+﻿using ComputerMonitorClient.Properties;
+using ComputerMonitorClient.RemoteClasses;
 using ComputerMonitorClient.WebSocket.Server;
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
@@ -51,9 +52,18 @@ namespace ComputerMonitorClient.WebSocket
                         if (swss != null)
                         {
                             RemoteResponse rr = new RemoteResponse();
-                            rr.status = 200;
-                            rr.message = "ok";
-                            swss.SendMessage(JsonConvert.SerializeObject(rr));
+                            if (remote.action.Value == RemoteClasses.Action.Information)
+                            {
+                                rr.status = 100;
+                                rr.message = Environment.MachineName;
+                                swss.SendMessage(JsonConvert.SerializeObject(rr));
+                            }
+                            else
+                            {
+                                rr.status = 200;
+                                rr.message = "ok";
+                                swss.SendMessage(JsonConvert.SerializeObject(rr));
+                            }
                         }
                     }
                 }
@@ -90,6 +100,9 @@ namespace ComputerMonitorClient.WebSocket
                     {
                         returnValue = false;
                     }
+                    break;
+                case RemoteClasses.Action.Information:
+                    returnValue = true;
                     break;
                 default:
                     break;
