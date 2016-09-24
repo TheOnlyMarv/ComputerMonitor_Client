@@ -70,6 +70,7 @@ namespace ComputerMonitorClient
             if(comboDevice.SelectedItem != null)
             {
                 Properties.Settings.Default[SettingFields.DEVICE_ID] = (comboDevice.SelectedItem as Device).id;
+                Properties.Settings.Default[SettingFields.DEVICE_NAME] = (comboDevice.SelectedItem as Device).name;
                 Properties.Settings.Default.Save();
                 this.SwitchToMainWindow();
             }

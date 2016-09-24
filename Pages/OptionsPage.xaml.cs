@@ -141,10 +141,5 @@ namespace ComputerMonitorClient
         {
             // Useless
         }
-
-        private void btnCancel_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            WebSocketSettings.WsServer.SendMessage("Testnachricht!");
-        }
     }
 }

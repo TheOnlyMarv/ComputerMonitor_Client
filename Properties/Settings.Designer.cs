@@ -152,5 +152,17 @@ namespace ComputerMonitorClient.Properties {
                 this["newdate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string devicename {
+            get {
+                return ((string)(this["devicename"]));
+            }
+            set {
+                this["devicename"] = value;
+            }
+        }
     }
 }

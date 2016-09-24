@@ -54,8 +54,9 @@ namespace ComputerMonitorClient.WebSocket
                             RemoteResponse rr = new RemoteResponse();
                             if (remote.action.Value == RemoteClasses.Action.Information)
                             {
+                                string deviceName = Properties.Settings.Default[SettingFields.DEVICE_NAME] as string;
                                 rr.status = 100;
-                                rr.message = Environment.MachineName;
+                                rr.message = String.IsNullOrEmpty(deviceName) ? Environment.MachineName : deviceName;
                                 swss.SendMessage(JsonConvert.SerializeObject(rr));
                             }
                             else

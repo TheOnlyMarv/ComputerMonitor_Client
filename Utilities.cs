@@ -16,6 +16,7 @@ namespace ComputerMonitorClient
     {
         public static readonly string TOKEN             = "token";
         public static readonly string DEVICE_ID         = "deviceId";
+        public static readonly string DEVICE_NAME       = "devicename";
         public static readonly string UNIT              = "unit";
         public static readonly string ADAPTER           = "adapter";
         public static readonly string NEW_UPLOAD        = "newupload";
