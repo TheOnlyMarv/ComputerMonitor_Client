@@ -56,14 +56,14 @@ namespace ComputerMonitorClient
 
         private void comboUnit_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[SettingFields.UNIT].ToString());
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Settings.Unit.ToString());
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default[SettingFields.UNIT] = (byte)(Unit)comboUnit.SelectedItem;
-            Properties.Settings.Default[SettingFields.ADAPTER] = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
-            Properties.Settings.Default.Save();
+            Settings.Unit = (byte)(Unit)comboUnit.SelectedItem;
+            Settings.Adapter = ((Echevil.NetworkAdapter)comboNetworkAdapter.SelectedItem).Name;
+            Settings.SaveSettings();
             StartUp((bool)checkStartup.IsChecked);
 
             this.SwitchToMeasuringPage();
@@ -72,7 +72,7 @@ namespace ComputerMonitorClient
 
         private void comboNetworkAdapter_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            string adapter = Properties.Settings.Default[SettingFields.ADAPTER].ToString();
+            string adapter = Settings.Adapter;
             comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
         }
 
@@ -85,9 +85,9 @@ namespace ComputerMonitorClient
         private void SettingsReset()
         {
             checkStartup.IsChecked = IsOnStartUp();
-            string adapter = Properties.Settings.Default[SettingFields.ADAPTER].ToString();
+            string adapter = Settings.Adapter;
             comboNetworkAdapter.SelectedItem = adapters.FirstOrDefault(x => x.Name == adapter);
-            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[SettingFields.UNIT].ToString());
+            comboUnit.SelectedItem = (Unit)Enum.Parse(typeof(Unit), Settings.Unit.ToString());
         }
 
         private void StartUp(bool addOnStartup)

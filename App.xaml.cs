@@ -18,11 +18,13 @@ namespace ComputerMonitorClient
         {
             
             Window window;
-            if (String.IsNullOrEmpty(ComputerMonitorClient.Properties.Settings.Default[SettingFields.TOKEN].ToString()))
+            Settings.LoadSettings();
+
+            if (String.IsNullOrEmpty(Settings.Token))
             {
                 window = new StartWindow(false);
             }
-            else if (Int32.Parse(ComputerMonitorClient.Properties.Settings.Default[SettingFields.DEVICE_ID].ToString()) < 0)
+            else if (Settings.DeviceId < 0)
             {
                 window = new StartWindow(true);
             }

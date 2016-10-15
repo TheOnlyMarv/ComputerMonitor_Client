@@ -12,22 +12,6 @@ using System.Windows.Media.Imaging;
 
 namespace ComputerMonitorClient
 {
-    public static class SettingFields
-    {
-        public static readonly string TOKEN             = "token";
-        public static readonly string DEVICE_ID         = "deviceId";
-        public static readonly string DEVICE_NAME       = "devicename";
-        public static readonly string UNIT              = "unit";
-        public static readonly string ADAPTER           = "adapter";
-        public static readonly string NEW_UPLOAD        = "newupload";
-        public static readonly string NEW_DOWNLOAD      = "newdownload";
-        public static readonly string NEW_DATE          = "newdate";
-        public static readonly string OLD_DOWNLOAD      = "olddownload";
-        public static readonly string OLD_UPLOAD        = "oldupload";
-        public static readonly string OLD_DATE          = "olddate";
-        public static readonly string OLD_SYNCHRONIZED  = "oldsynchronized";
-    }
-
     public static class WebSocketSettings
     {
         public static readonly string path = "/cm";

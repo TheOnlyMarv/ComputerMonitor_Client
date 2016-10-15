@@ -62,7 +62,7 @@ namespace ComputerMonitorClient
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            int deviceId = (int)Properties.Settings.Default[SettingFields.DEVICE_ID];
+            int deviceId = Settings.DeviceId;
             thisDevice = deviceList.FirstOrDefault(x => x.id == deviceId);
             thisDevice.usage = thisDevice.usage.OrderByDescending(x => x.date).ToList();
             if (thisDevice.usage.Count >= 0)
@@ -82,14 +82,14 @@ namespace ComputerMonitorClient
             {
                 statisticComponents.GroupBox.Header = String.Format("{0:dddd, MMMM d, yyyy}", selecetedDate.date);
             }
-            Unit unit = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[SettingFields.UNIT].ToString());
+            Unit unit = (Unit)Enum.Parse(typeof(Unit), Settings.Unit.ToString());
             statisticComponents.TextDownload.Content = string.Format("{0} {1}", (selecetedDate.download / Math.Pow(1024d, (byte)unit)).ToString("n"), unit.ToString());
             statisticComponents.TextUpload.Content = string.Format("{0} {1}", (selecetedDate.upload / Math.Pow(1024d, (byte)unit)).ToString("n"), unit.ToString());
         }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            string token = Properties.Settings.Default[SettingFields.TOKEN].ToString();
+            string token = Settings.Token;
             deviceList = Client.LoadDevices(token);
             foreach (var device in deviceList)
             {

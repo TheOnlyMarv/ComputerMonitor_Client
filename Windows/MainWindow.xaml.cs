@@ -32,7 +32,7 @@ namespace ComputerMonitorClient
 
             trayIcon.TrayMouseDoubleClick += TrayIcon_TrayMouseDoubleClick;
 
-            if (String.IsNullOrEmpty(Properties.Settings.Default[SettingFields.ADAPTER].ToString()))
+            if (String.IsNullOrEmpty(Settings.Adapter))
             {
                 this.SwitchToOptionPage();
             }

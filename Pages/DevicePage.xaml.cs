@@ -42,7 +42,7 @@ namespace ComputerMonitorClient
 
         private void LoadDeviceList()
         {
-            string token = Properties.Settings.Default[SettingFields.TOKEN].ToString();
+            string token = Settings.Token;
             List<Device> devices = Client.LoadDevices(token);
 
             comboDevice.DisplayMemberPath = "name";
@@ -52,7 +52,7 @@ namespace ComputerMonitorClient
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            string token = Properties.Settings.Default[SettingFields.TOKEN].ToString();
+            string token = Settings.Token.ToString();
             Status status = Client.AddDevice(token, textDevice.Text);
             if (status.status)
             {
@@ -69,9 +69,9 @@ namespace ComputerMonitorClient
         {
             if(comboDevice.SelectedItem != null)
             {
-                Properties.Settings.Default[SettingFields.DEVICE_ID] = (comboDevice.SelectedItem as Device).id;
-                Properties.Settings.Default[SettingFields.DEVICE_NAME] = (comboDevice.SelectedItem as Device).name;
-                Properties.Settings.Default.Save();
+                Settings.DeviceId = (comboDevice.SelectedItem as Device).id;
+                Settings.DeviceName = (comboDevice.SelectedItem as Device).name;
+                Settings.SaveSettings();
                 this.SwitchToMainWindow();
             }
             else

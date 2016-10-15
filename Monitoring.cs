@@ -38,7 +38,7 @@ namespace ComputerMonitorClient
 
         public void StartMonitoring()
         {
-            string adapter = Properties.Settings.Default[SettingFields.ADAPTER].ToString();
+            string adapter = Settings.Adapter;
             if (!string.IsNullOrEmpty(adapter))
             {
                 networkAdapter = this.networkMonitor.Adapters.FirstOrDefault(x => x.Name == adapter);
@@ -116,7 +116,7 @@ namespace ComputerMonitorClient
 
         private void MonitoringReport(object sender, ProgressChangedEventArgs e)
         {
-            Unit unit = (Unit)Enum.Parse(typeof(Unit), Properties.Settings.Default[SettingFields.UNIT].ToString());
+            Unit unit = (Unit)Enum.Parse(typeof(Unit), Settings.Unit.ToString());
 
             var models = modelHolders;
             var currentDownUp = models.Where(x => x.Typ == ModelUiTyp.CurrentDownload || x.Typ == ModelUiTyp.CurrentUpload);
