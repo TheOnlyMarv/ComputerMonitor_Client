@@ -14,7 +14,7 @@ namespace ComputerMonitorClient
     {
 
         private static WebClient webClient = new WebClient();
-        private static string baseUrl = @"https://theonlymarv.de/cm/";
+        private static string baseUrl = @"https://theonlymarv.de/cm/api/";
 
         private static string Downloader(string extendetUrl)
         {
